@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bishal-Mim</title>
+    <link href='https://fonts.googleapis.com/css?family=Sofia' rel='stylesheet'>
+
+
+
+
+    <style>
+        body {
+            background-image: linear-gradient(to right top, #1f0537, #380c60, #55108c, #7413bb, #9612eb);
+            height: 100%;
+            margin: 0, auto;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+        
+        .card {
+            position: relative;
+            width: 350px;
+            height: 380px;
+            border: 10px solid #9612eb;
+            margin: 60px auto 0 auto;
+            box-shadow: inset 10px 0px 15px 0px rgba(0, 0, 0, 0.1);
+            background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.219), rgba(255, 255, 255, 0.5)), url("overlay.jpg");
+            background-position: center;
+            /* Center the image */
+            background-repeat: no-repeat;
+            /* Do not repeat the image */
+            background-size: cover;
+            background-color: #e6f0e6;
+        }
+        
+        .card .text-container {
+            width: 80%;
+            height: 80%;
+            margin: auto;
+        }
+        
+        .strikethrough {
+            text-decoration: line-through;
+        }
+        
+        .card .text-container #head {
+            font-family: 'Nobile', sans-serif;
+            font-size: 1.5em;
+            margin: 40px auto 40px auto;
+        }
+        
+        .card p {
+            font-size: 1.1em;
+            line-height: 1.4;
+            font-family: 'Nobile';
+            color: #331717;
+            font-style: italic;
+            text-align: center;
+            margin: 30px auto 0px auto;
+        }
+        
+        .card .front {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            margin: -10px 0px 0px -10px;
+            border: 10px solid #9612eb;
+            backface-visibility: hidden;
+            background-color: #9612eb;
+            /* background-image: url($cover-image);
+	 */
+            background-size: contain;
+            transform-style: preserve-3d;
+            transform-origin: 0% 50%;
+            transform: perspective(800px) rotateY(0deg);
+            transition: all 0.8s ease-in-out;
+        }
+        
+        .card:hover .front {
+            transform: perspective(800px) rotateY(-170deg);
+            background-color: #41718d;
+        }
+        
+        .card:hover .back {
+            transform: perspective(800px) rotateY(-170deg);
+            box-shadow: 7px 0px 5px 0px rgba(0, 0, 0, 0.3), inset 2px 0px 15px 0px rgba(0, 0, 0, 0.1);
+            background-color: #d2dcd2;
+        }
+        
+        .card .back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 10px solid #9612eb;
+            margin: -10px 0px 0px -10px;
+            backface-visibility: visible;
+            filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, .5));
+            transform-style: preserve-3d;
+            transform-origin: 0% 50%;
+            transform: perspective(800px) rotateY(0deg);
+            transition: all 0.8s ease-in-out;
+            background-color: #e6f0e6;
+            box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.1);
+        }
+        
+        .imgset {
+            position: relative;
+            z-index: 1;
+            margin-bottom: -215px;
+        }
+        
+        .imgset img {
+            box-shadow: 0px 6px 11px 7px rgba(0, 0, 0, 0.22);
+            border-radius: 5px;
+        }
+        
+        .frame {
+            display: flex;
+            flex-wrap: wrap;
+            place-content: center;
+        }
+        
+        .box {
+            height: 200px;
+            width: 400px;
+            position: relative;
+            border: #9612eb solid 5px;
+            overflow: hidden;
+        }
+        
+        .photo img {
+            width: 400px;
+            height: 200px;
+        }
+        
+        .detail {
+            position: absolute;
+            height: 200px;
+            width: 400px;
+            top: 0;
+            color: white;
+            display: none;
+        }
+        
+        .box:hover .detail {
+            display: block;
+            background-color: rgba(150, 18, 235, 0.7);
+            height: 200px;
+        }
+        
+        .box:hover .photo img {
+            transform: scale(1.3);
+            transition: 2s;
+        }
+        
+        h1 {
+            font-weight: 2400;
+            text-align: center;
+            font-size: xx-large;
+            margin-top: 65px;
+            /* background-color: purple; */
+        }
+        
+        .container {
+            position: relative;
+            width: 50%;
+        }
+        
+        .image {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+        
+        .overlay {
+            position: absolute;
+            bottom: 100%;
+            left: 0;
+            right: 0;
+            background-color: purple;
+            overflow: hidden;
+            width: 100%;
+            height: 0;
+            transition: .5s ease;
+        }
+        
+        .container:hover .overlay {
+            bottom: 0;
+            height: 100%;
+        }
+        
+        .text {
+            white-space: nowrap;
+            color: white;
+            font-size: 20px;
+            position: absolute;
+            overflow: hidden;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            -ms-transform: translate(-50%, -50%);
+        }
+        
+        .float {
+            display: flex;
+        }
+        
+        .glow {
+            font-size: 40px;
+            color: #fff;
+            text-align: center;
+            animation: glow 1s ease-in-out infinite alternate;
+            font-family: cursive;
+        }
+        
+        .pic {
+            background-color: purple;
+        }
+        
+        @-webkit-keyframes glow {
+            from {
+                text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #e60073, 0 0 40px #e60073, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;
+            }
+            to {
+                text-shadow: 0 0 20px #fff, 0 0 30px #ff4da6, 0 0 40px #ff4da6, 0 0 50px #ff4da6, 0 0 60px #ff4da6, 0 0 70px #ff4da6, 0 0 80px #ff4da6;
+            }
+        }
+        
+        .wish {
+            font-family: 'sofia';
+            font-size: 9px;
+        }
+        
+        .button {
+            background-color: #4CAF50;
+            /* Green */
+            border: none;
+            color: white;
+            padding: 16px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            transition-duration: 0.4s;
+            cursor: pointer;
+        }
+        
+        .button1 {
+            background-color: white;
+            color: black;
+            border: 2px solid #4CAF50;
+            border-radius: 30px;
+        }
+        
+        .button1:hover {
+            background-color: #4CAF50;
+            color: white;
+        }
+        
+        .button2 {
+            background-color: white;
+            color: black;
+            border: 2px solid #008CBA;
+            border-radius: 30px;
+        }
+        
+        .button2:hover {
+            background-color: #008CBA;
+            color: white;
+        }
+        
+        .button3 {
+            background-color: white;
+            color: black;
+            border: 2px solid #f44336;
+            border-radius: 30px;
+        }
+        
+        .button3:hover {
+            background-color: #f44336;
+            color: white;
+        }
+        
+        .button4 {
+            background-color: white;
+            color: black;
+            border: 2px solid yellow;
+            border-radius: 30px;
+        }
+        
+        .button4:hover {
+            background-color: yellow;
+        }
+        
+        .button5 {
+            background-color: white;
+            color: black;
+            border: 2px solid rgb(153, 0, 255);
+            border-radius: 30px;
+        }
+        
+        .button5:hover {
+            background-color: rgb(255, 0, 200);
+        }
+        
+        .msg1,
+        .msg2,
+        .msg3,
+        .msg4 {
+            display: none;
+        }
+        
+        .bt1:hover+.msg1,
+        .bt2:hover+.msg2,
+        .bt3:hover+.msg3,
+        .bt4:hover+.msg4 {
+            display: block;
+        }
+        
+        .all1,
+        .all2,
+        .all3,
+        .all4 {
+            display: flex;
+        }
+        
+        h3 {
+            color: white;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="card">
+        <div class="back"></div>
+        <div class="front">
+            <div class="imgset">
+                <img width="100%" height="345px" src="duo-4.jpg">
+                <P style="margin-top: 1px;">Selfie-1</P>
+            </div>
+        </div>
+        <div class="text-container">
+            <p id="head">Precious words from him</p>
+            <p>There is a inner satisfaction calling you by your name, that you will never know and it increases every time i call you. I know my thoughts are reflecting the loving hopes of my heart because whenever they wander, they always take me to you.
+                Only special things can come inside my heart and stay. And now, I realize how deeply my life has been touched by you.💝💝😇😇
+
+            </p>
+
+        </div>
+    </div>
+    <div class="card">
+        <div class="back"></div>
+        <div class="front">
+            <div class="imgset">
+                <img width="100%" height="345px" src="duo-5.jpg">
+                <P style="margin-top: 1px;">Selfie-2</P>
+            </div>
+        </div>
+        <div class="text-container">
+            <p id="head">Precious words from him</p>
+            <p>If I could give you one thing in life, I'd give you the power to see yourself through my eyes ..only then could you realize how much you mean to me.My life would be dull and boring without your presence. Even on the cloudiest of days, you
+                carry the rainbow's vibrant colors into my life. My life was black and white until you came in and added that color.💘💘💘
+            </p>
+
+        </div>
+    </div>
+    <div class="card">
+        <div class="back"></div>
+        <div class="front">
+            <div class="imgset">
+                <img width="100%" height="345px" src="duo-6.jpg">
+                <P style="margin-top: 1px;">Selfie-3</P>
+
+            </div>
+        </div>
+        <div class="text-container">
+            <p id="head">Precious words from him</p>
+            <p>Thank you. When you smile, you just bring all the pleasure into my life. Your words have the means to deliver me to a place of love and happiness when you talk. Every moment spent with you is special; we share our emotions and lives, and I
+                love those moments every night I talk to you. Whatever happens, you will always be the best part of my life.❤️💙💜
+            </p>
+
+        </div>
+    </div>
+    <div class="card">
+        <div class="back"></div>
+        <div class="front">
+            <div class="imgset">
+                <img width="100%" height="345px" src="duo-8.jpg">
+                <P style="margin-top: 1px;">Selfie-4</P>
+            </div>
+        </div>
+        <div class="text-container">
+            <p id="head">Precious words from him</p>
+            <p> Falling in love with you… I don’t know how or when it happened. All I know that it was the best thing happened to me. I love you. I am literally living for you and only you. I think I am living a dream that I never want to come out of. It
+                was you and always will be you only. 🥰🥰🥰</p>
+
+        </div>
+    </div>
+    <div class="card">
+        <div class="back"></div>
+        <div class="front">
+            <div class="imgset">
+                <img width="100%" height="345px" src="duo-2.jpg">
+                <P style="margin-top: 1px;">Selfie-5</P>
+            </div>
+        </div>
+        <div class="text-container">
+
+            <p>"What is it about you that is really unique?" It could be what I see on the surface, what everyone sees and admires about your attributes, skills, and beautiful smile, which is closely tied to a warm and caring heart. These characteristics
+                distinguish you from others. It may also be the small details, such as how you speak and act. Even having a smile on your face makes me happy. If I ever find out what makes you so special, it'll most likely be a mixture of all of these
+                things. You are a unique person.😘🥰😍
+            </p>
+
+        </div>
+    </div>
+    <div class="card">
+        <div class="back"></div>
+        <div class="front">
+            <div class="imgset">
+                <img width="100%" height="345px" src="duo-3.jpg">
+                <P style="margin-top: 1px;">Selfie-6</P>
+            </div>
+        </div>
+        <div class="text-container">
+
+            <p> I think you're amazing! There's a place inside me where my sweetest dreams live, where my highest expectations are nurtured, where my deepest emotions are felt, and where my favorite memories are kept safe and warm. I find that you're on my
+                mind more often than anything else. Sometimes I intentionally think of you just to make my day brighter. But more often, you surprise me and I find you in my thoughts. There are even times when I realize you've been a part of my dreams🤗🤗🤗🤗.
+            </p>
+
+        </div>
+    </div>
+    <div class="card">
+        <div class="back"></div>
+        <div class="front">
+            <div class="imgset">
+                <img width="100%" height="350px" src="duo-9.jpg">
+                <P style="margin-top: 1px;">Selfie-7</P>
+            </div>
+        </div>
+        <div class="text-container">
+            <p id="head">Hii! Bishal Chandra Paul</p>
+            <p>Sacrificing your happiness for the happiness of the one you love is by far, the truest type of love.❤️💙💜</p>
+            <p>It's our memorable kayaking!🚣🏻‍♀🚣🏻‍♂
+            </p>
+        </div>
+    </div>
+    <h1 class="glow pic">Daredevilx007 & shinysoulx007☺️☺️
+    </h1>
+    <section class="frame">
+
+
+        <div class="box">
+            <div class="photo">
+                <img src="pubg-1.jpg" alt=""> </div>
+            <div class="detail glow">
+                <h6>I've fallen pretty damn for you</h6>
+            </div>
+
+        </div>
+        <div class="box">
+            <div class="photo">
+                <img src="pubg-2.jpg" alt=""> </div>
+            <div class="detail glow">
+                <h6>Deep down I miss you but I'll never admit
+                </h6>
+            </div>
+
+        </div>
+        <div class="box">
+            <div class="photo">
+                <img src="pubg-3.jpg" alt=""> </div>
+            <div class="detail glow">
+                <h6>If I give up on you, just know I did everything I could</h6>
+            </div>
+
+        </div>
+        <div class="box">
+            <div class="photo">
+                <img src="pubg-4.jpg" alt=""> </div>
+            <div class="detail glow">
+                <h6>My story will be incomplete without you, as there's no way I can ever replace you
+                </h6>
+            </div>
+
+        </div>
+        <div class="box">
+            <div class="photo">
+                <img src="pubg-5.jpg" alt=""> </div>
+            <div class="detail glow">
+                <h6>You are my favorite notification</h6>
+            </div>
+
+        </div>
+        <div class="box">
+            <div class="photo">
+                <img src="pubg-6.jpg" alt=""> </div>
+            <div class="detail glow">
+                <h6>When I listen to my heart, it whispers your name.</h6>
+            </div>
+
+        </div>
+        <div class="box">
+            <div class="photo">
+                <img src="pubg-7.jpg" alt=""> </div>
+            <div class="detail glow">
+                <h6>If forever does exist, please let it be you</h6>
+            </div>
+
+        </div>
+        <div class="box">
+            <div class="photo">
+                <img src="pubg-8.jpg" alt=""> </div>
+            <div class="detail glow">
+                <h6>I never want to stop making memories with you</h6>
+            </div>
+
+        </div>
+        <div class="box">
+            <div class="photo">
+                <img src="pubg-9.jpg" alt=""> </div>
+            <div class="detail glow">
+                <h6>I am the luckiest girl alive to have such a rare gem in my life.</h6>
+            </div>
+
+        </div>
+        <div class="box">
+            <div class="photo">
+                <img src="pubg-10.jpg" alt=""> </div>
+            <div class="detail glow">
+                <h6>I’m done. I don’t need anything more out of life. I have you, and that’s enough</h6>
+            </div>
+
+        </div>
+        <div class="box">
+            <div class="photo">
+                <img src="pubg-11.jpg" alt=""> </div>
+            <div class="detail glow">
+                <h6>I wanna live, sleep, and wake up by your side</h6>
+            </div>
+
+        </div>
+        <div class="box">
+            <div class="photo">
+                <img src="pubg-12.jpg" alt=""> </div>
+            <div class="detail glow">
+                <h6>I can’t stop thinking about you, today. tomorrow. always</h6>
+            </div>
+
+        </div>
+        <div class="box">
+            <div class="photo">
+                <img src="pubg-13.jpg" alt=""> </div>
+            <div class="detail glow">
+                <h6>You are the source of my joy, the center of my world and the whole of my heart</h6>
+            </div>
+
+        </div>
+        <div class="box">
+            <div class="photo">
+                <img src="pubg-14.jpg" alt=""> </div>
+            <div class="detail glow">
+                <h6>You're that part of me I'll always need</h6>
+            </div>
+
+        </div>
+        <div class="box">
+            <div class="photo">
+                <img src="pubg-15.jpg" alt=""> </div>
+            <div class="detail glow">
+                <h6>I am obsessed with your smile. I am obsessed with your soul</h6>
+            </div>
+
+        </div>
+
+    </section>
+    <div class="float">
+        <div class="container">
+            <img src="duo-1.jpeg" alt="Avatar" class="image">
+            <div class="overlay">
+                <div class="text wish">Actually we don't want any perfect person in our life.<br/> If there is something we want is comfort zone.<br/> We need someone with whom we can talk<br/> fearlessly & who will understand us. <br/> we want someone who is not gonna <br/>                    judge us based on our dumbnesses,<br/> lack of knowledge about something<br/> we don't know we want someone with<br/> whom we can share our every Secrets <br/> & problems without any hesitation. <br/> we just need some good people
+                    around us
+                    <br/> with whom we can talk & not begin feel dumb.</div>
+            </div>
+        </div>
+        <div class="container">
+            <img src="duo-7.jpg" alt="Avatar" class="image">
+            <div class="overlay">
+                <div class="text wish">Thank you so much for everything you did for me <br/> I'm such a miserable person you always there for me I rely on you.<br/> You make me happy. I don't know when I become like this<br/> but still choose stay with you with all my negativity,<br/>                    jealousy and drama all of thank you for supporting me <br/> I wish I become a better version of myself . <br/> May Almighty bless us and guide us to the right path.
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="myDIV">Hover over me.</div>
+    <div class="video">
+        <video width="320" height="240" controls>
+            <source src="pubg.mp4" type="video/mp4">
+          Your browser does not support the video tag. <!-- Text to be shown incase browser doesnt support html5 -->
+    <!-- </video></div> -->-->
+    <div>
+        <h3>Click those buttons to see some magical words!&#128525;</h3>
+    </div>
+
+    <div class="all1">
+        <div class="bt1">
+            <button class="button button1">Green</button>
+        </div>
+        <div class="msg1">
+            <h3>You are such a nice person!&#128151; </h3>
+        </div>
+    </div>
+    <div class="all2">
+        <div class="bt2">
+            <button class="button button2">Blue</button>
+        </div>
+        <div class="msg2">
+            <h3>You are cute & cool guy.&#128512;</h3>
+        </div>
+
+    </div>
+    <div class="all3">
+        <div class="bt3">
+            <button class="button button3">Red</button>
+        </div>
+        <div class="msg3">
+            <h3>You are loyal and kind hearted!🥰</h3>
+        </div>
+
+    </div>
+    <div class="all4">
+        <div class="bt4">
+            <button class="button button4">Yellow</button>
+        </div>
+        <div class="msg4">
+            <h3>Your intelligence and innocence are the things that makes you so beautiful.😇 </h3>
+        </div>
+
+    </div>
+    <a href="https://www.youtube.com/watch?v=XOuc-oVSOnw" target="_blank"><button class="button button5">click here</button></a>
+
+
+</body>
+
+</html>
